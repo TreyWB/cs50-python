@@ -1,0 +1,74 @@
+import re
+
+def main():
+    plate = input("Plate: ")
+    if is_valid(plate):
+        print("Valid")
+    else:
+        print("Invalid")
+
+
+def is_valid(plate):
+    # Find special characters in plate
+    test_one = char_check(plate)
+
+    # Total length of plate
+    test_two = len_check(plate)
+
+    # Numbers in middle of plate
+    test_three = num_check(plate)
+
+    # If Zero is first number used
+    test_four = zero_check(plate)
+
+    # Must start with 2 letters
+    test_five = letter_check(plate)
+
+    if test_one == False:
+        return False
+    elif test_two == False:
+        return False
+    elif test_three == False:
+        return False
+    elif test_four == False:
+        return False
+    elif test_five == False:
+        return False
+    else:
+        return True 
+    
+def char_check(plate):
+    if re.search(r'[.,!@#$%^&*()-=+~|\s]+', plate):
+        print(f"Match found in {plate}")
+        return False
+    else:
+        print(f"No match found in {plate}")
+        return True
+    
+def len_check(plate):
+    length = len(plate)
+    
+    if length >= 6 or length <= 2:
+        return False
+    else:
+        return True
+    
+def num_check(plate):
+    if re.search(r'\d+[a-zA-Z]', plate):
+        return False
+    else:
+        return True
+    
+def zero_check(plate):
+    if re.search(r'^0\d*', plate):
+        return False
+    else:
+        return True
+    
+def letter_check(plate):
+    if re.search(r'^[a-zA-Z]{2}', plate):
+        return True
+    else:
+        return False
+
+main()
